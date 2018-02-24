@@ -90,9 +90,6 @@ function memoize(func) {
 
 
 /**
- * Returns the function trying to call the passed function and if it throws,
- * retrying it specified number of attempts.
- *
  * Возвращает функцию, которая пытаеся вызвать переданную функцию, и,
  * если она выбрасывает ошибку, повторяет вызов функции заданное количество раз.
  * @param {Function} функция
@@ -112,13 +109,6 @@ function retry(func, attempts) {
 
 
 /**
- * Returns the logging wrapper for the specified method,
- * Logger has to log the start and end of calling the specified function.
- * Logger has to log the arguments of invoked function.
- * The fromat of output log is:
- * <function name>(<arg1>, <arg2>,...,<argN>) starts
- * <function name>(<arg1>, <arg2>,...,<argN>) ends
- *
  * Возвращает логирующую обертку для указанного метода,
  * Logger должен логировать начало и конец вызова указанной функции.
  * Logger должен логировать аргументы вызываемой функции.
