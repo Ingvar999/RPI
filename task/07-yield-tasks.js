@@ -2,7 +2,7 @@
 
 /********************************************************************************************
  *                                                                                          *
- * Перед началом работы с заданием, пожалуйста ознакомьтесь с туториалом:                   *          *
+ * Перед началом работы с заданием, пожалуйста ознакомьтесь с туториалом:                   *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators   *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield        *
  *                                                                                          *
@@ -63,14 +63,14 @@ function* getFibonacciSequence() {
 
 
 /**
- * Обход графа с использованием поиска в глубину
+ * Обход дерева с использованием поиска в глубину
  * Подробности: https://en.wikipedia.org/wiki/Depth-first_search
  *
- * У каждой вершины(node) есть ребра (child) записанные в массив node.children
- * Также, вершина может не содержать ребер, т.е. у нее отсутствует свойство 'children'
+ * У каждого узла(node) есть потомки (child) записанные в массив node.children
+ * Листья не содержат потомков, т.е. у них отсутствует свойство 'children'
  *
- * @params {object} корень графа
- * @return {Iterable.<object>} последовательность всех графов в порядке поиска в глубину
+ * @params {object} корень дерева
+ * @return {Iterable.<object>} последовательность всех вершин в порядке поиска в глубину
  * @example
  *
  *   var node1 = { n:1 }, node2 = { n:2 }, node3 = { n:3 }, node4 = { n:4 },
@@ -98,14 +98,14 @@ function* depthTraversalTree(root) {
 
 
 /**
- * Обход графа с использованием поиска в ширину
+ * Обход дерева с использованием поиска в ширину
  * Подробности: https://en.wikipedia.org/wiki/Breadth-first_search
  *
- * У каждой вершины(node) есть ребра (child) записанные в массив node.children
- * Также, вершина может не содержать ребер, т.е. у нее отсутствует свойство 'children'
+ * У каждого узла(node) есть потомки (child) записанные в массив node.children
+ * Листья не содержат потомков, т.е. у них отсутствует свойство 'children'
  *
- * @params {object} корень графа
- * @return {Iterable.<object>} последовательность всех графов в порядке поиска в ширину
+ * @params {object} корень дерева
+ * @return {Iterable.<object>} последовательность всех вершин в порядке поиска в ширину
  * @example
  *     source tree (root = 1):
  *
