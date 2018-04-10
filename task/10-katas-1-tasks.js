@@ -89,7 +89,71 @@ function* expandBraces(str) {
  *
  */
 function getZigZagMatrix(n) {
-    throw new Error('Not implemented');
+
+    let array = new Array(n);
+    for (let i = 0; i<n; i++){
+        array[i] = new Array(n);
+    }
+    let x, y, value = 0;
+    for (let diag = 0; diag < n; diag++)
+    {
+        if (diag % 2 != 0)
+        {
+            x = 0;
+            y = diag;
+
+            while (y >= 0)
+            {
+                array[x][y] = value;
+                value++;
+                x++;
+                y--;
+            }
+        }
+        else
+        {
+            x = diag;
+            y = 0;
+
+            while (x >= 0)
+            {
+                array[x][y] = value;
+                value++;
+                x -= 1;
+                y +=  1;
+            }
+        }
+    }
+    for (let diag = 1; diag < n; diag++)
+    {
+        if ((diag % 2 == 0) && !(n%2 == 0) || (diag % 2 != 0) && (n%2 == 0))
+        {
+            x = n-1;
+            y = diag;
+
+            while (y < n)
+            {
+                array[x][y] = value;
+                value++;
+                x--;
+                y++;
+            }
+        }
+        else
+        {
+            x = diag;
+            y = n-1;
+
+            while (x < n)
+            {
+                array[x][y] = value;
+                value++;
+                x++;
+                y--;
+            }
+        }
+    }
+    return array;
 }
 
 
@@ -138,7 +202,22 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
+    console.log(nums);
+    let res = '';
+    let i = 0, val;
+    while (i < nums.length) {
+        val = nums[i];
+
+        if (nums.length - i > 2 && nums[i] == val && nums[i + 1] == val + 1 && nums[i + 2] == val + 2) {
+            res += val + '-';
+            while (i < nums.length && nums[++i] == ++val) ;
+            res += nums[i - 1] + ',';
+        }
+        else {
+            res += nums[i++] + ',';
+        }
+    }
+    return res.slice(0, res.length-1);
 }
 
 module.exports = {

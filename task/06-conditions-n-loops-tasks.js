@@ -395,9 +395,38 @@ function isBracketsBalanced(str) {
  *   Date('2000-01-01 01:00:00.100'), Date('2015-01-02 03:00:05.000')  => '15 years ago'
  *
  */
-function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+function getDecimal(num) {
+    return num - Math.floor(num);
 }
+function timespanToHumanString(startDate, endDate) {
+    let interval = endDate.getTime() - startDate.getTime();
+    interval /= 1000;
+    let minutes = interval / 60 ;
+    let hours = minutes / 60 ;
+    let days = hours / 24 ;
+    let months = days / 30 ;
+    let years = months / 12 ;
+
+    switch (true) {
+        case (interval <= 45): return "a few seconds ago";
+        case (interval <= 90): return "a minute ago";
+        case (interval <= 45 * 60): return `${getDecimal(minutes)>0.5?
+            Math.ceil(minutes):Math.floor(minutes) } minutes ago`;
+        case (interval <= 90 * 60): return "an hour ago";
+        case (interval <= 22 * 60 * 60): return `${getDecimal(hours)>0.5?
+            Math.ceil(hours):Math.floor(hours)} hours ago`;
+        case (interval <= 36 * 60 * 60): return "a day ago";
+        case (interval <= 25 * 24 * 60 * 60): return `${getDecimal(days)>0.5?
+            Math.ceil(days):Math.floor(days)} days ago`;
+        case (interval <= 45 * 24 * 60 * 60): return "a month ago";
+        case (interval <= 345 * 24 * 60 * 60): return `${getDecimal(months)>0.5?
+            Math.ceil(months):Math.floor(months)} months ago`;
+        case (interval <= 545 * 24 * 60 * 60): return "a year ago";
+        default: return `${getDecimal(years)>0.5?
+            Math.ceil(years):Math.floor(years)} years ago`;
+    }
+}
+
 
 /**
  * Вернуть строку с представление числа в n-ой (бинарной, десятичной, и т.д., где n<=10) системе исчисления.

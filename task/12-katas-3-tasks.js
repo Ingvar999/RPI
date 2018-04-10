@@ -27,6 +27,7 @@
  *   'FUNCTION'  => false
  *   'NULL'      => false 
  */
+
 function findStringInSnakingPuzzle(puzzle, searchStr) {
     throw new Error('Not implemented');
 }
@@ -65,7 +66,18 @@ function* getPermutations(chars) {
  *    [ 1, 6, 5, 10, 8, 7 ] => 18  (купить по 1,6,5 и затем продать все по 10)
  */
 function getMostProfitFromStockQuotes(quotes) {
-    throw new Error('Not implemented');
+    let res = 0;
+    console.log(quotes);
+    while (quotes.length > 0) {
+        let max = Math.max.apply(null, quotes);
+        let maxind = quotes.indexOf(max);
+        for (let i = 0; i<maxind; i++){
+            res -= quotes[i];
+        }
+        res += max * maxind;
+        quotes = quotes.slice(maxind+1);
+    }
+    return res;
 }
 
 
