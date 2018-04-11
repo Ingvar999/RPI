@@ -290,10 +290,18 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
-    let arr = (ccn+'').split('').map((item, index) => index%2==0? ((+item)*2>9?(+item)*2 - 9:(+item)*2) : +item);
-    console.log(arr);
-    return arr.reduce((sum, item) => sum+item, 0) % 10 == 0;
+    let sum = 0, val = ccn+'';
+    let nDigits = val.length;
+        let parity = nDigits % 2;
+    for (let i = 0; i<nDigits; i++) {
+        let digit = +val[i];
+        if (i % 2 == parity)
+        digit = digit * 2;
+        if (digit > 9)
+            digit = digit - 9;
+        sum += digit;
+    }
+    return (sum % 10) == 0;
 }
 
 
@@ -543,8 +551,27 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
+function Func(pos, ch){
+    for (let i = 0; i<3; i++){
+        if (pos[i][0] == ch && pos[i][1] == ch && pos[i][2] == ch)
+            return true;
+    }
+    for (let i = 0; i<3; i++){
+        if (pos[0][i] == ch && pos[1][i] == ch && pos[2][i] == ch)
+            return true;
+    }
+    if (pos[0][0] == ch && pos[1][1] == ch && pos[2][2] == ch ||
+        pos[0][2] == ch && pos[1][1] == ch && pos[2][0] == ch)
+        return true;
+    return false;
+}
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    if (Func(position, '0'))
+        return '0';
+    if (Func(position, 'X'))
+        return 'X';
+    return undefined;
+
 }
 
 

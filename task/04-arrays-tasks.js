@@ -275,7 +275,11 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-   throw new Error('Not implemented');
+    let tempArr = arr.map((item, i) => {
+        let mas = new Array(i + 1);
+        return mas.fill(item);
+    });
+    return tempArr.length != 0 ? tempArr.reduce((cur, next) => cur.concat(next)) : tempArr;
 }
 
 
@@ -517,11 +521,11 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-    throw new Error('Not implemented');
     let countryMap = new Map();
     array.map(item => {
-        countryMap.set(keySelector(item), countryMap.get(keySelector(item)) ?
-            [valueSelector(item)].concat(countryMap.get(keySelector(item))) : [valueSelector(item)])
+        countryMap.set(keySelector(item), countryMap.get(keySelector(item)) ? [
+            ...countryMap.get(keySelector(item)),
+            valueSelector(item)] : [valueSelector(item)])
     });
     return countryMap;
 }

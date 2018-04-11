@@ -17,8 +17,27 @@
  *  ]
  */
 function createCompassPoints() {
-    throw new Error('Not implemented');
-    var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    var sides = ['N', 'E', 'S', 'W'];  // use array of cardinal directions only!
+    let res = [], direction = "", degrees = 0;
+    for (let i = 0; i < sides.length; i++) {
+        let btwcardinal = (i == 0 || i == 2) ? (sides[i] + sides[i + 1])
+            : (sides[i == 3 ? 0 : i + 1] + sides[i]);
+        for (let count = 0; count < 8; count++) {
+            switch (count) {
+                case 0: direction = sides[i]; break;
+                case 1: direction = sides[i] + 'b' + sides[i == 3 ? 0 : i + 1]; break;
+                case 2: direction = sides[i] + btwcardinal; break;
+                case 3: direction = btwcardinal + "b" + sides[i]; break;
+                case 4: direction = btwcardinal; break;
+                case 5: direction = btwcardinal + "b" + sides[i == 3 ? 0 : i + 1]; break;
+                case 6: direction = sides[i == 3 ? 0 : i + 1] + btwcardinal; break;
+                case 7: direction = sides[i == 3 ? 0 : i + 1] + "b" + sides[i]; break;
+            }
+            res.push({ abbreviation: direction, azimuth: degrees });
+            degrees += 11.25;
+        }
+    }
+    return res;
 }
 
 
@@ -178,7 +197,35 @@ function getZigZagMatrix(n) {
  *
  */
 function canDominoesMakeRow(dominoes) {
-    throw new Error('Not implemented');
+    let res = "" + dominoes.shift(), i = 0;
+    while (dominoes.length != 0) {
+        if (dominoes[i][0] == res[0]) {
+            res = dominoes[i].reverse() + res;
+            dominoes.splice(i, 1);
+            i = 0;
+        }
+        else if (dominoes[i][1] == res[0]) {
+            res = dominoes[i] + res;
+            dominoes.splice(i, 1);
+            i = 0;
+        }
+        else if (dominoes[i][0] == res[res.length - 1]) {
+            res = res + dominoes[i];
+            dominoes.splice(i, 1);
+            i = 0;
+        }
+        else if (dominoes[i][1] == res[res.length - 1]) {
+            res = res + dominoes[i].reverse();
+            dominoes.splice(i, 1);
+            i = 0;
+        }
+        else {
+            i++;
+            if (i == dominoes.length)
+                return false;
+        }
+    }
+    return true;
 }
 
 

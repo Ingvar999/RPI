@@ -75,7 +75,21 @@ function parseBankAccount(bankAccount) {
  *                                                                                                'characters.'
  */
 function* wrapText(text, columns) {
-    throw new Error('Not implemented');
+    let arr = text.split('');
+    let i = 0, maxind =  columns, lastgape = 0;
+    while (i < text.length){
+        if (arr[i] == ' ')
+            lastgape = i;
+        if (i == maxind){
+            arr[lastgape] = '\n';
+            maxind = lastgape+columns+1;
+        }
+        i++;
+    }
+    arr = arr.join('').split('\n');
+    for (let i = 0; i<arr.length; i++){
+        yield arr[i];
+    }
 }
 
 
@@ -148,7 +162,41 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-   throw new Error('Not implemented');
+    let a = figure.split('\n'), answer = [];
+    let check = function bar(n, m) {
+        let i, j;
+        for (i = m;; i++) {
+            if (a[n - 1][i] == undefined || a[n - 1][i] == ' ' || a[n] == undefined) return;
+            if (a[n][i] != ' ') break;
+        }
+        let w = i;
+        for (j = n;; j++) {
+            if (a[j] == undefined || a[j][w] == ' ') return;
+            if (a[j][w - 1] != ' ') break;
+        }
+        let h = j;
+        for (i = w - 1;; i--) {
+            if (a[h][i] == undefined || a[h][i] == ' ' || a[h - 1] == undefined) return;
+            if (a[h - 1][i] != ' ') break;
+        }
+        if (i + 1 != m) return;
+        for (j = h - 1;; j--) {
+            if (a[j] == undefined || a[j][m - 1] == ' ') return;
+            if (a[j][m] != ' ') break;
+        }
+        if (j + 1 != n) return;
+        n = h - n;
+        m = w - m;
+        answer.push('+' + '-'.repeat(m) + '+\n' + ('|' + ' '.repeat(m) + '|\n').repeat(n) + '+' + '-'.repeat(m) + '+\n');
+    }
+
+    a.pop();
+    a.forEach((v, i) => v.split('').forEach((v, j) => {
+        if (v == '+') check(i + 1, j + 1);
+    }));
+    for (let index = 0; index < answer.length; index++) {
+        yield answer[index];
+    }
 }
 
 

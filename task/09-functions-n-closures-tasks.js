@@ -65,8 +65,11 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-    throw new Error('Not implemented');
+function getPolynom(...args) {
+    return (x) => {
+        return args.length == 3 ? args[0] * x * x + args[1] * x + args[2] :
+            (args.length == 2 ? args[0] * x + args[1] : (args.length == 1 ? args[0] : null));
+    }
 }
 
 
@@ -85,7 +88,15 @@ function getPolynom() {
  *   memoizer() => тоже рандомное число  (при всех последующих вызовах возвращается тоже закешированный результат)
  */
 function memoize(func) {
-    throw new Error('Not implemented');
+    let count = 0, old = 0;
+    return () => {
+        if (count < 1) {
+            old = func();
+            count++;
+            return old;
+        }
+        return old;
+    }
 }
 
 
@@ -141,7 +152,28 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-    throw new Error('Not implemented');
+    return (...args)=>{
+        let str = '';
+        for (let index = 0; index < args.length; index++) {
+            if (args[index] instanceof Array) {
+                str += '[';
+                for (let i = 0; i < args[index].length; i++)
+                    if ((typeof (args[index][i])).toLowerCase() == "string")
+                        str += "\"" + args[index][i] + "\",";
+                    else
+                        str += args[index][i] + ",";
+                str = str.slice(0, str.length - 1);
+                str += '],';
+            }
+            else
+                str += args[index] + ',';
+        }
+        str = str.slice(0, str.length - 1);
+        logFunc(`${func.name}(${str}) starts`);
+        let res = func.apply(this, args);
+        logFunc(`${func.name}(${str}) ends`);
+        return res;
+    }
 }
 
 
@@ -157,14 +189,10 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(fn) {
-    throw new Error('Not implemented');
-    let args = [];
-    for (let i = 1; i<arguments.length; args.push(arguments[i++]));
-    return function(rest) {
-        for (let i = 0; i<arguments.length; args.push(arguments[i++]));
-        console.log(args);
-        return fn(args)
+function partialUsingArguments(fn, ...args) {
+    let args1 = args;
+    return function(...args) {
+        return fn.apply(null, args1.concat(args));
     };
 }
 
